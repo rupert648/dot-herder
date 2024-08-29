@@ -1,0 +1,20 @@
+[package]
+name = "dot-herder"
+version = "0.1.0"
+edition = "2021"
+authors = ["Rupert Carr <rupertcarr@hotmail.co.uk>"]
+description = "A CLI tool for creating and managing a .dotfiles repository"
+
+[dependencies]
+clap = { version = "4.3", features = ["derive"] }
+dialoguer = "0.10.4"
+walkdir = "2.3.3"
+anyhow = "1.0"
+symlink = "0.1.0"
+git2 = "0.17"
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+dirs = "5.0"
+shellexpand = "3.1.0"
+colored = "2.0.0"
+ptree = "0.4.0"
