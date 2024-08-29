@@ -1,6 +1,9 @@
+mod secret;
+
 use clap::Parser;
 use colored::*;
 use dialoguer::{Input, MultiSelect};
+use secret::check_for_and_accept_secrets;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -27,7 +30,7 @@ struct DotfilesList {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
-    let config = fs::read_to_string(&args.config)?;
+    let config = fs::read_to_string(args.config)?;
     let dotfiles_list: DotfilesList = serde_yaml::from_str(&config)?;
 
     println!("{}", "Welcome to Dotfiles Manager!".green().bold());
@@ -97,7 +100,12 @@ fn create_dotfiles_repo(
     fs::create_dir_all(repo_path)?;
 
     for dotfile in dotfiles {
+        if !check_for_and_accept_secrets(dotfile)? {
+            continue;
+        }
+
         let target = Path::new(repo_path).join(dotfile.file_name().unwrap());
+
         symlink_file(dotfile, &target)?;
         println!(
             "  {} {}",

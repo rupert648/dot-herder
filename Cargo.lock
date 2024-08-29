@@ -276,6 +276,7 @@ dependencies = [
  "dirs",
  "git2",
  "ptree",
+ "regex",
  "serde 1.0.209",
  "serde_yaml",
  "shellexpand",
