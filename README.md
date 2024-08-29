@@ -6,6 +6,7 @@ DotHerder is a friendly CLI tool that helps you round up and manage your dotfile
 
 - 🔍 Searches your system for common dotfiles
 - ✅ Lets you select which files to include
+- ⚠️  Checks those files for any sus secrets
 - 📁 Creates a new repository for your dotfiles
 - 🔗 Symlinks the selected files to the new repo
 - 🌳 Displays a pretty tree structure of your new dotfiles repo
@@ -15,8 +16,8 @@ DotHerder is a friendly CLI tool that helps you round up and manage your dotfile
 1. Make sure you have Rust and Cargo installed on your system.
 2. Clone this repository:
    ```
-   git clone https://github.com/yourusername/dotherder.git
-   cd dotherder
+   git clone https://github.com/rupert648/dot-herder.git
+   cd dot-herder
    ```
 3. Build the project:
    ```
@@ -25,7 +26,7 @@ DotHerder is a friendly CLI tool that helps you round up and manage your dotfile
 
 ## Using DotHerder
 
-1. Create a YAML configuration file (or use the existing one under config.yaml) listing the dotfiles you want to search for. Here's an example:
+1. Use the existing yaml file (under `config.yaml`) or create your own config, this contains a list of the dotfiles you want to search for. Here's an example:
 
    ```yaml
    dotfiles:
@@ -49,6 +50,8 @@ DotHerder is a friendly CLI tool that helps you round up and manage your dotfile
 ## Contributing
 
 Feel free to open issues or submit pull requests if you have ideas for improvements or new features. Let's make dotfile management a breeze together!
+
+It would be great if config.yaml needed very little editing and covered most common .dotfiles, so please feel free to open a PR and add any you yourself find helpful!
 
 ## License
 
