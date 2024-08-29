@@ -45,7 +45,6 @@ impl Scanner {
         let mut results = Vec::new();
 
         for (i, line) in lines.iter().enumerate() {
-            // Approach 1: Keyword matching
             if self.keyword_regex.is_match(line) {
                 results.push(ScanResult {
                     line_number: i + 1,
@@ -59,46 +58,10 @@ impl Scanner {
                     reason: "Keyword match".to_string(),
                 });
             }
-
-            // // Approach 2: Entropy checking
-            // for word in line.split_whitespace() {
-            //     if word.len() >= 8 && Self::calculate_entropy(word) > 3.5 {
-            //         results.push(ScanResult {
-            //             line_number: i + 1,
-            //             culprit_line: line.to_string(),
-            //             prev_line: if i > 0 {
-            //                 Some(lines[i - 1].to_string())
-            //             } else {
-            //                 None
-            //             },
-            //             next_line: lines.get(i + 1).map(|&s| s.to_string()),
-            //             reason: "High entropy".to_string(),
-            //         });
-            //         break;
-            //     }
-            // }
         }
 
         results
     }
-
-    // TODO: improve this as shite
-    // fn calculate_entropy(s: &str) -> f64 {
-    //     let mut char_count = std::collections::HashMap::new();
-    //     let len = s.len() as f64;
-    //
-    //     for c in s.chars() {
-    //         *char_count.entry(c).or_insert(0) += 1;
-    //     }
-    //
-    //     -char_count
-    //         .values()
-    //         .map(|&count| {
-    //             let p = count as f64 / len;
-    //             p * p.log2()
-    //         })
-    //         .sum::<f64>()
-    // }
 }
 
 impl ScanResult {
@@ -142,7 +105,6 @@ fn print_line(line_number: usize, content: &str, width: usize, is_culprit: bool)
 #[cfg(test)]
 mod tests {
     use super::*;
-
     #[test]
     fn test_scanner() {
         let scanner = Scanner::new();
