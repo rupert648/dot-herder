@@ -1,53 +1,27 @@
 dotfiles:
-  - name: .zshrc
-    path: ~/
-  - name: .bash_profile
-    path: ~/
-  - name: .bashrc
-    path: ~/
-  - name: .vimrc
-    path: ~/
-  - name: .gitconfig
-    path: ~/
-  - name: .gitignore_global
-    path: ~/
-  - name: .tmux.conf
-    path: ~/
-  - name: .ssh/config
-    path: ~/.ssh/
-  - name: .config/nvim/init.vim
-    path: ~/.config/nvim/
-  - name: .hyper.js
-    path: ~/
-  - name: .npmrc
-    path: ~/
-  - name: .yarnrc
-    path: ~/
-  - name: .editorconfig
-    path: ~/
-  - name: .aliases
-    path: ~/
-  - name: .functions
-    path: ~/
-  - name: .inputrc
-    path: ~/
-  - name: .hushlogin
-    path: ~/
-  - name: .curlrc
-    path: ~/
-  - name: .wgetrc
-    path: ~/
-  - name: .gemrc
-    path: ~/
-  - name: .config/alacritty/alacritty.yml
-    path: ~/.config/alacritty/
-  - name: .config/karabiner/karabiner.json
-    path: ~/.config/karabiner/
-  - name: .config/iterm2/com.googlecode.iterm2.plist
-    path: ~/.config/iterm2/
-  - name: .aws/config
-    path: ~/.aws/
-  - name: .aws/credentials
-    path: ~/.aws/
-  - name: .docker/config.json
-    path: ~/.docker/
+  - name: ${HOME}/.zshrc
+  - name: ${HOME}/.bash_profile
+  - name: ${HOME}/.bashrc
+  - name: ${HOME}/.vimrc
+  - name: ${HOME}/.gitconfig
+  - name: ${HOME}/.gitignore_global
+  - name: ${HOME}/.tmux.conf
+  - name: ${HOME}/.ssh/config
+  - name: ${HOME}/.config/nvim/init.vim
+  - name: ${HOME}/.hyper.js
+  - name: ${HOME}/.npmrc
+  - name: ${HOME}/.yarnrc
+  - name: ${HOME}/.editorconfig
+  - name: ${HOME}/.aliases
+  - name: ${HOME}/.functions
+  - name: ${HOME}/.inputrc
+  - name: ${HOME}/.hushlogin
+  - name: ${HOME}/.curlrc
+  - name: ${HOME}/.wgetrc
+  - name: ${HOME}/.gemrc
+  - name: ${HOME}/.config/alacritty/alacritty.yml
+  - name: ${HOME}/.config/karabiner/karabiner.json
+  - name: ${HOME}/.config/iterm2/com.googlecode.iterm2.plist
+  - name: ${HOME}/.aws/config
+  - name: ${HOME}/.aws/credentials
+  - name: ${HOME}/.docker/config.json

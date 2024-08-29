@@ -25,7 +25,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let repo_path = get_repo_path()?;
 
     println!("{}", "Searching for dotfiles...".yellow());
-    let found_dotfiles = find_dotfiles(&config.dotfiles);
+    let found_dotfiles = find_dotfiles(&config.dotfiles, args.home.as_deref());
 
     println!("{}", "Found the following dotfiles:".green());
     for dotfile in &found_dotfiles {

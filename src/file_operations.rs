@@ -6,12 +6,26 @@ use std::path::{Path, PathBuf};
 use symlink::symlink_file;
 use thiserror::Error;
 
-pub fn find_dotfiles(dotfiles: &[Dotfile]) -> Vec<PathBuf> {
+const DEFAULT_HOME_PATH: &str = "~";
+
+fn create_dotfile_path(path: &str, home_path: Option<&str>) -> String {
+    path.replace(
+        "${HOME}",
+        if home_path.is_some() {
+            home_path.unwrap()
+        } else {
+            DEFAULT_HOME_PATH
+        },
+    )
+}
+
+pub fn find_dotfiles(dotfiles: &[Dotfile], home_path: Option<&str>) -> Vec<PathBuf> {
     dotfiles
         .iter()
         .filter_map(|dotfile| {
-            let path =
-                PathBuf::from(shellexpand::tilde(&dotfile.path).to_string()).join(&dotfile.name);
+            let path = create_dotfile_path(&dotfile.name, home_path);
+
+            let path = PathBuf::from(shellexpand::tilde(&path).to_string());
             if path.exists() {
                 Some(path)
             } else {
