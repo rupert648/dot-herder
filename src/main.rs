@@ -11,33 +11,58 @@ use colored::*;
 use config::Config;
 use file_operations::{create_dotfiles_repo, find_dotfiles, print_file_tree};
 use git_operations::init_git_repo;
+use indicatif::{ProgressBar, ProgressStyle};
 use std::fs;
 use std::path::Path;
-use tui::{get_repo_path, select_dotfiles};
+use std::time::Duration;
+use tui::{get_repo_path, print_title_screen, select_dotfiles};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
     let config = fs::read_to_string(args.config)?;
     let config: Config = serde_yaml::from_str(&config)?;
 
-    println!("{}", "Welcome to Dotfiles Manager!".green().bold());
+    print_title_screen();
 
     let repo_path = get_repo_path()?;
 
-    println!("{}", "Searching for dotfiles...".yellow());
-    let found_dotfiles = find_dotfiles(&config.dotfiles, args.home.as_deref());
+    let spinner = ProgressBar::new_spinner();
+    spinner.set_message("Searching for dotfiles...");
+    spinner.set_style(
+        ProgressStyle::default_spinner()
+            .tick_chars("⠁⠂⠄⡀⢀⠠⠐⠈ ")
+            .template("{spinner:.green} {msg}")?,
+    );
+    spinner.enable_steady_tick(Duration::from_millis(100));
 
-    println!("{}", "Found the following dotfiles:".green());
-    for dotfile in &found_dotfiles {
-        println!("  {}", dotfile.to_string_lossy().blue());
-    }
+    let found_dotfiles = find_dotfiles(&config.dotfiles, args.home.as_deref());
+    spinner.finish_and_clear();
 
     let selected_dotfiles = select_dotfiles(&found_dotfiles)?;
 
-    println!("{}", "Creating dotfiles repo...".yellow());
+    let spinner = ProgressBar::new_spinner();
+    spinner.set_message("Creating dotfiles repo...");
+    spinner.set_style(
+        ProgressStyle::default_spinner()
+            .tick_chars("⠁⠂⠄⡀⢀⠠⠐⠈ ")
+            .template("{spinner:.green} {msg}")?,
+    );
+    spinner.enable_steady_tick(Duration::from_millis(100));
+
     create_dotfiles_repo(&repo_path, &selected_dotfiles)?;
-    println!("{}", "Initialising git...".yellow());
+    spinner.finish_and_clear();
+
+    let spinner = ProgressBar::new_spinner();
+    spinner.set_message("Initialising git...");
+    spinner.set_style(
+        ProgressStyle::default_spinner()
+            .tick_chars("⠁⠂⠄⡀⢀⠠⠐⠈ ")
+            .template("{spinner:.green} {msg}")?,
+    );
+    spinner.enable_steady_tick(Duration::from_millis(100));
+
     init_git_repo(&repo_path)?;
+    spinner.finish_and_clear();
 
     println!("{}", "Dotfiles repo created successfully!".green().bold());
     println!("Repo location: {}\n", repo_path.cyan());

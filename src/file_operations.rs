@@ -1,5 +1,4 @@
 use crate::config::Dotfile;
-use crate::secret::check_for_and_accept_secrets;
 use colored::*;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -11,8 +10,8 @@ const DEFAULT_HOME_PATH: &str = "~";
 fn create_dotfile_path(path: &str, home_path: Option<&str>) -> String {
     path.replace(
         "${HOME}",
-        if home_path.is_some() {
-            home_path.unwrap()
+        if let Some(hp) = home_path {
+            hp
         } else {
             DEFAULT_HOME_PATH
         },
@@ -42,10 +41,6 @@ pub fn create_dotfiles_repo(
     fs::create_dir_all(repo_path)?;
 
     for dotfile in dotfiles {
-        if !check_for_and_accept_secrets(dotfile)? {
-            continue;
-        }
-
         let target = Path::new(repo_path).join(dotfile.file_name().unwrap());
 
         symlink_file(dotfile, &target)?;
@@ -76,12 +71,10 @@ pub enum RepoPathError {
 pub fn is_valid_repo_path(path: &str) -> Result<(), RepoPathError> {
     let path = Path::new(path);
 
-    // Check if the path already exists
     if path.exists() {
         return Err(RepoPathError::PathAlreadyExists);
     }
 
-    // Check if the parent directory exists and is writable
     let parent = path
         .parent()
         .ok_or_else(|| RepoPathError::InvalidPath("Path has no parent directory".to_string()))?;
