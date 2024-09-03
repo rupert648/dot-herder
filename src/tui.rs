@@ -1,8 +1,15 @@
 use colored::*;
 use dialoguer::{Input, MultiSelect};
+use figlet_rs::FIGfont;
 use std::path::PathBuf;
 
-use crate::file_operations::is_valid_repo_path;
+use crate::{file_operations::is_valid_repo_path, secret::check_for_and_accept_secrets};
+
+pub fn print_title_screen() {
+    let standard_font = FIGfont::standard().unwrap();
+    let figure = standard_font.convert("dot-herder");
+    println!("{}", figure.unwrap());
+}
 
 fn prompt_for_repo_path() -> Result<String, std::io::Error> {
     Input::new()
@@ -33,13 +40,20 @@ pub fn select_dotfiles(dotfiles: &[PathBuf]) -> Result<Vec<PathBuf>, Box<dyn std
         .collect();
 
     let selections = MultiSelect::new()
-        .with_prompt("Select dotfiles to include".cyan().to_string())
+        .with_prompt(
+            "\nFound the following dotfiles, select which to include:"
+                .green()
+                .to_string(),
+        )
         .items(&dotfiles_strings)
         .defaults(&vec![true; dotfiles.len()])
         .interact()?;
 
-    Ok(selections
+    let selections: Vec<PathBuf> = selections
         .into_iter()
         .map(|i| dotfiles[i].clone())
-        .collect())
+        .filter(|pb| check_for_and_accept_secrets(pb).is_ok_and(|f| f))
+        .collect();
+
+    Ok(selections)
 }
