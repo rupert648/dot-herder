@@ -24,29 +24,52 @@ DotHerder is a friendly CLI tool that helps you round up and manage your dotfile
    cargo build --release
    ```
 
-## Using DotHerder
+## Usage
 
-1. Use the existing yaml file (under `config.yaml`) or create your own config, this contains a list of the dotfiles you want to search for. Here's an example:
+1. Use the existing yaml file (under `config.yaml`) or create your own config (see config section):
 
    ```yaml
    dotfiles:
-     - name: .zshrc
-       path: ~/
-     - name: .vimrc
-       path: ~/
-     - name: .gitconfig
-       path: ~/
+     - name: ${HOME}/.zshrc
+     - name: ${HOME}/.bash_profile
+     - name: ${HOME}/.bashrc
+     - name: ${HOME}/.vimrc
    ```
 
 2. Run DotHerder:
-   Example
-   ```
-   ./target/release/dotherder --config config.yaml
-   ```
+#### Basic Syntax
+dot-herder [OPTIONS] --config <CONFIG>
+Copy
+##### Options
 
-4. Follow the prompts to select your dotfiles and create your new repo.
+- `-c, --config <CONFIG>`: Path to the configuration file (required)
+- `--home <HOME>`: Optional home directory path. Defaults to home (~/)
+- `-h, --help`: Print help information
+- `-V, --version`: Print version information
 
-5. Enjoy your newly organized dotfiles!
+##### Examples
+
+1. Using a config file with default home directory:
+```bash
+dot-herder --config ~/.dotfiles/config.yaml
+```
+3. Specifying a custom home directory:
+```bash
+dot-herder --config ~/.dotfiles/config.yaml --home /custom/home/path
+```
+5. Viewing help information:
+```bash
+dot-herder --help
+```
+7. Follow the prompts to select your dotfiles and create your new repo.
+
+8. Enjoy your newly organized dotfiles!
+
+## Config Structure
+
+The `dotfiles` section contains a list of dotfile entries:
+
+- `name`: Path to the dotfile, using `${HOME}` as a placeholder for the user's home directory. Home is replaced by the `--home` argument, defaulting to `~`
 
 ## Contributing
 
