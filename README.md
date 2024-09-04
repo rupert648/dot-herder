@@ -39,13 +39,14 @@ DotHerder is a friendly CLI tool that helps you round up and manage your dotfile
    ```
 
 2. Run DotHerder:
+   Example
    ```
-   ./target/release/dotherder --config dotfiles_config.yaml
+   ./target/release/dotherder --config config.yaml
    ```
 
-3. Follow the prompts to select your dotfiles and create your new repo.
+4. Follow the prompts to select your dotfiles and create your new repo.
 
-4. Enjoy your newly organized dotfiles!
+5. Enjoy your newly organized dotfiles!
 
 ## Contributing
 
